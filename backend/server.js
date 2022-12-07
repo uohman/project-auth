@@ -3,8 +3,12 @@ import cors from "cors";
 import mongoose from "mongoose";
 import crypto from "crypto";
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv'
+import jwt from 'jsonwebtoken'
 
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/project-mongo";
+dotenv.config() 
+
+const mongoUrl = process.env.MONGO_URL //"mongodb://localhost/project-mongo";
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
@@ -18,7 +22,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-//// Monday
 const UserSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -38,6 +41,7 @@ const UserSchema = new mongoose.Schema({
 
 const User = mongoose.model("User", UserSchema);
 
+
 app.post("/register", async (req, res) => {
   const { username, password } = req.body;
   // npm i bcrypt
@@ -50,11 +54,13 @@ app.post("/register", async (req, res) => {
       });
     } else {
       const newUser = await new User({username: username, password: bcrypt.hashSync(password, salt)}).save();
+      const token = jwt.sign({ username }, process.env.TOKEN_KEY, { expiresIn: "2h"} ) // username setup with time limit
+
       res.status(201).json({
         success: true,
         response: {
           username: newUser.username,
-          accessToken: newUser.accessToken,
+          accessToken: token,
           id: newUser._id
         }
       })
@@ -72,13 +78,14 @@ app.post("/login", async (req, res) => {
 
   try {
     const user = await User.findOne({username});
-    if (user && bcrypt.compareSync(password, user.password)) {
+    if (user && bcrypt.compareSync(password, user.password)) {                      
+      const token = jwt.sign({ username } , process.env.TOKEN_KEY, { expiresIn: "2h" }) // hashing the username, will be stored to the database, time expiration
       res.status(200).json({
         success: true,
         response: {
           username: user.username,
           id: user._id,
-          accessToken: user.accessToken
+          accessToken: token
         }
       });
   } else {
@@ -98,8 +105,13 @@ app.post("/login", async (req, res) => {
 const authenticateUser = async (req, res, next) => {
   const accessToken = req.header("Authorization");
   try {
-    const user = await User.findOne({accessToken: accessToken});
+    if (!accessToken) {  /*** Authorization of the user during the Authentication process ***/
+      return res.status(401).json({ success: false, response: "No token"})     // token validation
+    }
+    const deCodeUsername = jwt.verify( accessToken , process.env.TOKEN_KEY ) //verifying the integrity of the token
+    const user = await User.findOne({username: deCodeUsername.username})   //the query, pushing this to database
     if (user) {
+      req.user = user //fetching the actual data through the token
       next();
     } else {
       res.status(401).json({
@@ -131,8 +143,7 @@ const ThoughtSchema = new mongoose.Schema({
 
 const Thought = mongoose.model("Thought", ThoughtSchema);
 
-app.get("/authenticate", authenticateUser)
-app.get("/authenticate", (req, res) => {
+app.get("/authenticate", authenticateUser , (req, res) => {
   res.status(200).json({
     success: true,
     response: "Authenticating user"

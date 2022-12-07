@@ -5,7 +5,7 @@ import SignIn from './SignIn'
 const Wrapper = () => {
   return (
     <div>
-      <Registration />
+      <Registration /> 
       <SignIn />
     </div>
   );
