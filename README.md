@@ -1,13 +1,25 @@
 # Project Auth API
 
-Replace this readme with your own information about your project.
+✓ Pair-programming 
 
-Start by briefly describing the assignment in a sentence or two. Keep it short and to the point.
+✓ How to authenticate users using tokens
+
+✓ How to securely store passwords in your databases
+
+✓ How to think about security and defensive design when building frontend or backend code
+
+✓ Some common attacks which are used against sites and how to protect against them
+
+✓ How to build a registration flow
+
+✓ How to handle authentication, both in the frontend and in the backend
+
+✓ How to build a frontend and backend at the same time
 
 ## The problem
 
-Describe how you approached to problem, and what tools and techniques you used to solve it. How did you plan? What technologies did you use? If you had more time, what would be next?
 
 ## View it live
 
-Every project should be deployed somewhere. Be sure to include the link to the deployed project so that the viewer can click around and see what it's all about.
+
+/** Project made by Maria So and Ulrika Öhman **/
