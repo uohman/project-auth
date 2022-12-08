@@ -43,16 +43,21 @@ const User = mongoose.model("User", UserSchema);
 
 
 app.post("/register", async (req, res) => {
+  console.log(req.body)
   const { username, password } = req.body;
   // npm i bcrypt
   try {
     const salt = bcrypt.genSaltSync();
-    if (password.length < 8) {
+    if (password.length < 1) {
       res.status(400).json({
         success: false,
         response: "Password must be at least 8 characters long"
       });
     } else {
+      const userExist = await User.findOne({ username })
+      if (userExist) {
+        return res.status(400).json({ success: false, response: "User already registered."})
+      }
       const newUser = await new User({username: username, password: bcrypt.hashSync(password, salt)}).save();
       const token = jwt.sign({ username }, process.env.TOKEN_KEY, { expiresIn: "2h"} ) // username setup with time limit
 
@@ -66,6 +71,7 @@ app.post("/register", async (req, res) => {
       })
     }
   } catch(error) {
+    console.log(error)
     res.status(400).json({
       success: false,
       response: error
@@ -146,7 +152,7 @@ const Thought = mongoose.model("Thought", ThoughtSchema);
 app.get("/authenticate", authenticateUser , (req, res) => {
   res.status(200).json({
     success: true,
-    response: "Authenticating user"
+    response: req.user.username // if login succesfull getting the username
   })
 })
 

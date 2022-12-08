@@ -18,18 +18,24 @@ const Registration = () => {
     try {
       const result = await fetch("http://localhost:8080/register", { //fetching username and password
         method: "POST",
+        headers: {
+          "Content-type": "application/json"
+        },
         body: JSON.stringify({
-          userName, password 
+          username: userName, password  // key=password
         })
       })
-      const data = result.json()
+      const data = await result.json()
       if (data.success) {
+        setError("") // no error sign displayed.
         setSuccess('Your account has been created succesfully')
         localStorage.setItem('token', data.accessToken) // saving data in the local storage
       } else {
-        setError("Error could not register")
+        setSuccess("")
+        setError(data.response)
       }
     } catch (error) {
+      setSuccess("")
       console.log(error)
       setError("Sorry an error occured")
     }
