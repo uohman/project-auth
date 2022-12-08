@@ -127,7 +127,7 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-const ThoughtSchema = new mongoose.Schema({
+/* const ThoughtSchema = new mongoose.Schema({
   message: {
     type: String,
   },
@@ -141,14 +141,23 @@ const ThoughtSchema = new mongoose.Schema({
   }
 });
 
-const Thought = mongoose.model("Thought", ThoughtSchema);
+const Thought = mongoose.model("Thought", ThoughtSchema); */
+
+const authenticatedContent = "This is the secret"
 
 app.get("/authenticate", authenticateUser , (req, res) => {
-  res.status(200).json({
+  try {
+    res.status(200).json({
     success: true,
-    response: "Authenticating user"
+    authenticatedContent
   })
-})
+} catch {
+    res.status(401).json({
+    errors: error,
+    response: "Failed to display the secret"
+  })
+}
+});
 
 
 ////
