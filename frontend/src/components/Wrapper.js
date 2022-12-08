@@ -1,12 +1,11 @@
 import React from 'react';
 import Registration from './Registration'
-import SignIn from './SignIn'
+import Login from './Login'
 
 const Wrapper = () => {
   return (
     <div>
-      <Registration /> 
-      <SignIn />
+      Start page
     </div>
   );
 }

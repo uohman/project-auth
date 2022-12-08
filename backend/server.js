@@ -133,28 +133,13 @@ const authenticateUser = async (req, res, next) => {
   }
 }
 
-const ThoughtSchema = new mongoose.Schema({
-  message: {
-    type: String,
-  },
-  createdAt: {
-    type: String,
-    default: () => new Date()
-  },
-  hearts: {
-    type: Number,
-    default: 0
-  }
-});
-
-const Thought = mongoose.model("Thought", ThoughtSchema);
 
 app.get("/authenticate", authenticateUser , (req, res) => {
   res.status(200).json({
     success: true,
     response: req.user.username // if login succesfull getting the username
   })
-})
+});
 
 
 ////

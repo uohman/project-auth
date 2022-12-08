@@ -62,10 +62,10 @@ const Registration = () => {
               value = {userName} 
               required />
             <input 
-              type="text" 
+              type="password" 
               name="password" 
               placeholder="Your password" 
-              onChange={(e) => setPassword(e.target.value)} 
+              onChange={(event) => setPassword(event.target.value)} 
               value = {password} 
               required />
           <button type="submit" className="button">REGISTER</button>

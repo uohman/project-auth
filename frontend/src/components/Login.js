@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AuthenticatedContent from './AuthenticatedContent'
 
-const SignIn = () => {
+const Login = () => {
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState ('')
     const [error, setError] = useState('')
@@ -75,4 +75,4 @@ const SignIn = () => {
     );
   }
 
-export default SignIn
+export default Login
