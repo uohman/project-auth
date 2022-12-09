@@ -69,7 +69,7 @@ const Login = () => {
                 value = {userName} 
                 required />
               <input 
-                type="text" 
+                type="password" 
                 name="password" 
                 placeholder="Your password" 
                 onChange={(event) => setPassword(event.target.value)} 

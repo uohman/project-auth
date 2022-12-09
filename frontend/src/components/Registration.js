@@ -48,34 +48,36 @@ const Registration = () => {
   }
  
   return (
-    <div>
-      { error && 
-      <strong className='error-msg'>
-        {error}
-      </strong>
-      }
-      { success && 
-      <strong className='success-msg'>
-        {success}
-      </strong>
-      }
-          <form onSubmit={submit}>
-            <input 
-              type="text" 
-              name="username" 
-              placeholder="Your username" 
-              onChange={(event) => setUserName(event.target.value)} 
-              value = {userName} 
-              required />
-            <input 
-              type="password" 
-              name="password" 
-              placeholder="Your password" 
-              onChange={(event) => setPassword(event.target.value)} 
-              value = {password} 
-              required />
-          <button type="submit" className="button">REGISTER</button>
-        </form>
+    <div className='Outer-wrapper'>
+      <div className='Inner-wrapper'>
+        { error && 
+        <strong className='error-msg'>
+          {error}
+        </strong>
+        }
+        { success && 
+        <strong className='success-msg'>
+          {success}
+        </strong>
+        }
+            <form onSubmit={submit}>
+              <input 
+                type="text" 
+                name="username" 
+                placeholder="Your username" 
+                onChange={(event) => setUserName(event.target.value)} 
+                value = {userName} 
+                required />
+              <input 
+                type="password" 
+                name="password" 
+                placeholder="Your password" 
+                onChange={(event) => setPassword(event.target.value)} 
+                value = {password} 
+                required />
+            <button type="submit" className="button">REGISTER</button>
+          </form>
+        </div>
     </div>
   );
 }
