@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import AuthenticatedContent from './AuthenticatedContent'
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate()
+
     const [userName, setUserName] = useState('')
     const [password, setPassword] = useState ('')
     const [error, setError] = useState('')
@@ -30,7 +33,10 @@ const Login = () => {
         if (data.success) {
           setError("") // no error sign displayed.
           setSuccess('Log in succesfull')
-          localStorage.setItem('token', data.accessToken) // saving data in the local storage
+          localStorage.setItem('token', data.response.accessToken) // saving data in the local storage
+          setTimeout(() => {
+            navigate("/authenticate")
+          }, 3000)
         } else {
           setSuccess("")
           setError(data.response)
