@@ -3,7 +3,7 @@ import Wrapper  from 'components/Wrapper'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 //import { Provider } from 'react-redux';
 // import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { user } from 'reducers/user';
+// import { user } from 'reducers/user';
 import Registration from 'components/Registration';
 import Login from 'components/Login';
 import AuthenticatedContent from 'components/AuthenticatedContent';
