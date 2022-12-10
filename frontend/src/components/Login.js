@@ -20,7 +20,7 @@ const Login = () => {
       setError('') 
   
       try {
-        const result = await fetch("http://localhost:8080/login", { //fetching username and password
+        const result = await fetch("https://project-auth-2-fls35onjaq-lz.a.run.app/login", { //fetching username and password
           method: "POST",
           headers: {
             "Content-type": "application/json"

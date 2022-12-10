@@ -14,7 +14,7 @@ const AuthenticatedContent = () => {
       if (token) { // if token found
         setCheckInProgress(false)
         try {
-          const result = await fetch("http://localhost:8080/authenticate", { //fetching username and password
+          const result = await fetch("https://project-auth-2-fls35onjaq-lz.a.run.app/authenticate", { //fetching username and password
             method: "GET",
             headers: {
               "Content-type": "application/json", 

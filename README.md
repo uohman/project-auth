@@ -1,5 +1,5 @@
 # Project Auth API
-This is a backend project about how to authenticate users and handle passwords. The project is made by Maria So and Ulrika Öhman
+This is a backend project about how to authenticate users and handle passwords. The project is made by Maria So and Ulrika Öhman.
 
 ## The problem
 - How to authenticate users using tokens

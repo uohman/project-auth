@@ -19,7 +19,7 @@ const Registration = () => {
       setError('') 
 
     try {
-      const result = await fetch("http://localhost:8080/register", { //fetching username and password
+      const result = await fetch("https://project-auth-2-fls35onjaq-lz.a.run.app/register", { //fetching username and password
         method: "POST",
         headers: {
           "Content-type": "application/json"
