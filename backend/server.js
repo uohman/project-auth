@@ -1,10 +1,10 @@
 import express, { response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
-import crypto from "crypto";
 import bcrypt from "bcrypt";
 import dotenv from 'dotenv'
 import jwt from 'jsonwebtoken'
+import User from './models/UserSchema'
 
 dotenv.config() 
 
@@ -21,26 +21,6 @@ const app = express();
 // Add middlewares to enable cors and json body parsing
 app.use(cors());
 app.use(express.json());
-
-const UserSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-  // npm i crypto
-  accessToken: {
-    type: String,
-    default: () => crypto.randomBytes(128).toString("hex")
-  }
-});
-
-const User = mongoose.model("User", UserSchema);
-
 
 app.post("/register", async (req, res) => {
   console.log(req.body)
@@ -59,7 +39,7 @@ app.post("/register", async (req, res) => {
         return res.status(400).json({ success: false, response: "User already registered."})
       }
       const newUser = await new User({username: username, password: bcrypt.hashSync(password, salt)}).save();
-      const token = jwt.sign({ username }, process.env.TOKEN_KEY, { expiresIn: "2h"} ) // username setup with time limit
+      const token = jwt.sign({ username }, process.env.TOKEN_KEY, { expiresIn: "2h"} ) // token creation sending to fronted, username setup with time limit
 
       res.status(201).json({
         success: true,
@@ -115,7 +95,7 @@ const authenticateUser = async (req, res, next) => {
       return res.status(401).json({ success: false, response: "No token"})     // token validation
     }
     const deCodeUsername = jwt.verify( accessToken , process.env.TOKEN_KEY ) //verifying the integrity of the token
-    const user = await User.findOne({username: deCodeUsername.username})   //the query, pushing this to database
+    const user = await User.findOne({ username: deCodeUsername.username})   //the query, pushing this to database
     if (user) {
       req.user = user //fetching the actual data through the token
       next();
@@ -126,13 +106,13 @@ const authenticateUser = async (req, res, next) => {
       })
     }
   } catch (error) {
+    console.log(error)
     res.status(400).json({
       response: error,
       success: false
     })
   }
 }
-
 
 app.get("/authenticate", authenticateUser , (req, res) => {
   res.status(200).json({
@@ -141,8 +121,6 @@ app.get("/authenticate", authenticateUser , (req, res) => {
   })
 });
 
-
-////
 
 // Start defining your routes here
 app.get("/", (req, res) => {
