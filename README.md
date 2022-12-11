@@ -11,4 +11,5 @@ This is a backend project about how to authenticate users and handle passwords. 
 - How to build a frontend and backend at the same time
 
 ## View it live
+Backend: https://project-auth-2-fls35onjaq-lz.a.run.app
 Frontend: https://beautiful-selkie-55d887.netlify.app
