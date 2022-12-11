@@ -49,7 +49,7 @@ const Login = () => {
     }
    
     return (
-      <div>
+      <div className='login'>
         { error && 
         <strong className='error-msg'>
           {error}

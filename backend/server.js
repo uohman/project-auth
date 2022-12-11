@@ -8,7 +8,7 @@ import User from './models/UserSchema'
 
 dotenv.config() 
 
-const mongoUrl = process.env.MONGO_URL //"mongodb://localhost/project-mongo";
+const mongoUrl = process.env.MONGO_URL 
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
@@ -31,7 +31,7 @@ app.post("/register", async (req, res) => {
     if (password.length < 1) {
       res.status(400).json({
         success: false,
-        response: "Password must be at least 8 characters long"
+        response: "Password must be at least more than one characters long"
       });
     } else {
       const userExist = await User.findOne({ username })

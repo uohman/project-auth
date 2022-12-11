@@ -45,8 +45,20 @@ const AuthenticatedContent = () => {
   }
   return (
     <>
-    <div>Hello {answer}</div>
-    <button onClick={logOut}>LOG OUT</button>
+    <div className="Auth-wrapper">
+    <div className='Authentication'>Hello {answer} 
+    <button className="Logout-button" onClick={logOut}>LOG OUT</button>
+    <lottie-player
+          src="https://assets8.lottiefiles.com/packages/lf20_1frvu8qg.json"
+          alt="greeting"
+          speed="1"
+          autoplay
+          width="40px"
+          height="40px">
+    </lottie-player>
+    </div>
+    </div>
+ 
     </>
   )
   }
